@@ -6,7 +6,13 @@ import { useCart } from '../context/CartContext'
 function Checkout() {
   const { cartItems, clearCart } = useCart()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ fullName: '', address: '', city: '', postalCode: '', phone: '' })
+  const [form, setForm] = useState({
+    fullName: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    phone: '',
+  })
   const [error, setError] = useState('')
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -28,7 +34,7 @@ function Checkout() {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/orders',
+        `${import.meta.env.VITE_API_URL}/api/orders`,
         {
           items: cartItems.map((item) => ({
             productId: item.id,
@@ -50,24 +56,35 @@ function Checkout() {
   }
 
   if (cartItems.length === 0) {
-    return <div style={{ padding: '40px' }}><h1>Nothing to checkout</h1></div>
+    return (
+      <div style={{ padding: '40px' }}>
+        <h1>Nothing to checkout</h1>
+      </div>
+    )
   }
 
   return (
     <div className="auth-page">
       <form className="auth-form" onSubmit={handlePlaceOrder}>
         <h1>Checkout</h1>
+
         {error && <p className="auth-error">{error}</p>}
+
         <label>Full Name</label>
         <input name="fullName" value={form.fullName} onChange={handleChange} required />
+
         <label>Address</label>
         <input name="address" value={form.address} onChange={handleChange} required />
+
         <label>City</label>
         <input name="city" value={form.city} onChange={handleChange} required />
+
         <label>Postal Code</label>
         <input name="postalCode" value={form.postalCode} onChange={handleChange} required />
+
         <label>Phone</label>
         <input name="phone" value={form.phone} onChange={handleChange} required />
+
         <h2>Total: ₹{total}</h2>
         <button type="submit">Place Order (Mock Payment)</button>
       </form>
