@@ -2,8 +2,8 @@
 
 Full-stack e-commerce web app.
 
-**Live demo:** https://YOUR-APP.vercel.app
-**API:** https://YOUR-API.onrender.com
+**Live demo:** https://shopsphere-2qsh.vercel.app/
+**API:** https://shopsphere-3-6mr3.onrender.com
 
 ## Features
 - Product listing with category filter
